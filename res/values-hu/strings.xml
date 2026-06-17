@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Rendszerfrissítő</string>
+    <string name="notification_channel_progress">Frissítés előrehaladása</string>
+    <string name="notification_channel_reboot">Újraindítási felszólítás</string>
+    <string name="notification_channel_failure">Hibabejelentés</string>
+    <string name="notification_channel_updated">Már naprakész</string>
+    <string name="notification_check_title">Rendszerfrissítés keresése</string>
+    <string name="notification_download_title">Rendszerfrissítés letöltése</string>
+    <string name="notification_verify_title">Rendszerfrissítés hitelesítése</string>
+    <string name="notification_install_title">Rendszerfrissítés telepítése</string>
+    <string name="notification_validate_title">Rendszerfrissítés érvényesítése</string>
+    <string name="notification_finalize_title">Rendszerfrissítés befejezése</string>
+    <string name="notification_reboot_title">Frissítés sikeresen telepítve</string>
+    <string name="notification_reboot_text">Kérjük indítsa újra a készüléket a legújabb rendszerkiadás futtatásához.</string>
+    <string name="notification_reboot_action">Újraindítás</string>
+    <string name="notification_updated_title">A készülék naprakész</string>
+    <string name="notification_updated_text">A legújabb %s csatorna kiadása már telepítve van.</string>
+    <string name="notification_failed_check_title">Frissítések keresése sikertelen</string>
+    <string name="notification_failed_check_text">Hiba történt a legújabb frissítés keresése során. A rendszer hamarosan újrapróbálkozik.</string>
+    <string name="notification_failed_download_title">Frissítés letöltése sikertelen</string>
+    <string name="notification_failed_download_text">Hiba lépett fel a legújabb frissítés letöltésekor. A rendszer hamarosan újrapróbálkozik, és ha továbbra is a legújabb verzió áll rendelkezésre, a letöltés folytatódik.</string>
+    <string name="notification_failed_verify_title">Frissítés hitelesítése sikertelen</string>
+    <string name="notification_failed_verify_text">A szerverről letöltött legújabb frissítés nem felelt meg a hitelesítési ellenőrzésnek. A rendszer hamarosan újrapróbálkozik, és a letöltést ismét elvégzi.</string>
+    <string name="notification_failed_install_title">Frissítés telepítése sikertelen</string>
+    <string name="notification_failed_install_text">Bár a legújabb frissítés sikeresen hitelesítve lett, a telepítés sikertelen. A rendszer hamarosan újrapróbálkozik.</string>
+    <string name="settings_title">Rendszerfrissítés</string>
+    <string name="settings_header">Beállítások</string>
+    <string name="channel_title">Kiadócsatorna</string>
+    <string name="channel_stable">Stabil</string>
+    <string name="channel_beta">Béta</string>
+    <string name="channel_alpha">Alfa</string>
+    <string name="network_type_title">Engedélyezett hálózatok</string>
+    <string name="network_type_any">Bármelyik</string>
+    <string name="network_type_not_roaming">Nem roaming</string>
+    <string name="network_type_unmetered">Korlátlan</string>
+    <string name="battery_not_low_title">Minimum akkumulátor töltöttség kötelezése</string>
+    <string name="battery_not_low_summary_on">Csak akkor töltse le/telepítse a frissítéseket, ha az akkumulátor egy bizonyos szint fölött van</string>
+    <string name="battery_not_low_summary_off">A frissítések letöltése/telepítése akkor is, ha az akkumulátor egy bizonyos szint alatt van</string>
+    <string name="requires_charging_title">Készülék töltése szükséges</string>
+    <string name="requires_charging_summary_on">Csak akkor töltse le/telepítse a frissítéseket, ha a készülék tölt</string>
+    <string name="requires_charging_summary_off">A frissítések letöltése/telepítése akkor is, ha a készülék nem tölt</string>
+    <string name="idle_reboot_title">Automatikus újraindítás</string>
+    <string name="idle_reboot_summary_on">Sikeres frissítés után ha a készülék inaktív, automatikusan újraindul</string>
+    <string name="idle_reboot_summary_off">Sikeres frissítés után ha a készülék inaktív, ne induljon újra automatikusan</string>
+    <string name="check_for_updates_title">Frissítések keresése</string>
+    <string name="check_for_updates_summary">Érintse meg a frissítések kereséséhez</string>
+    <string name="notification_settings_title">Értesítési beállítások</string>
+    <string name="notification_settings_summary">Módosítsa az értesítési beállításokat</string>
+    <string name="next">Következő</string>
+    <string name="save">Mentés</string>
+
+</resources>

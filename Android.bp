@@ -7,8 +7,6 @@ android_app {
         "androidx.preference_preference",
         "SettingsLibCategory",
         "SettingsLibCollapsingToolbarBaseActivity",
-        "setupcompat",
-        "setupdesign",
     ],
     platform_apis: true,
     privileged: true,
