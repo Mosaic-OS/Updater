@@ -47,4 +47,8 @@
     <string name="check_for_updates_summary">Tap to check for updates</string>
     <string name="notification_settings_title">Notification settings</string>
     <string name="notification_settings_summary">Modify notification channel settings</string>
+    <string name="next">Next</string>
+    <string name="save">Save</string>
+    <string name="alert_metered_network">You\'re connected to a metered network. Continuing may use mobile data and result in extra charges. Proceed?</string>
+    <string name="alert_roaming_network">You\'re on a roaming network. Continuing may incur additional data charges. Proceed?</string>
 </resources>
