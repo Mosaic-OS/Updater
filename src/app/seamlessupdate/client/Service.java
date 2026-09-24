@@ -274,11 +274,18 @@ public class Service extends IntentService {
             wakeLock.acquire();
 
             if (mUpdating) {
+                if (serviceIsUserInitiated && Settings.getPreferences(this)
+                        .getBoolean(Settings.KEY_WAITING_FOR_REBOOT, false)) {
+                    NotificationHandler.showRebootCheckResult(this);
+                }
                 Log.d(TAG, "updating already, returning early");
                 return;
             }
             final SharedPreferences preferences = Settings.getPreferences(this);
             if (preferences.getBoolean(Settings.KEY_WAITING_FOR_REBOOT, false)) {
+                if (serviceIsUserInitiated) {
+                    NotificationHandler.showRebootCheckResult(this);
+                }
                 Log.d(TAG, "updated already, waiting for reboot");
                 return;
             }
@@ -302,7 +309,7 @@ public class Service extends IntentService {
             final long targetBuildDate = Long.parseLong(metadata[1]);
             final long sourceBuildDate = SystemProperties.getLong("ro.build.date.utc", 0);
             if (targetBuildDate <= sourceBuildDate) {
-                notificationHandler.showUpdatedNotification(channel);
+                notificationHandler.showUpdatedNotification(channel, serviceIsUserInitiated);
                 Log.d(TAG, "targetBuildDate: " + targetBuildDate + " not higher than sourceBuildDate: " + sourceBuildDate);
                 mUpdating = false;
                 return;
@@ -316,6 +323,7 @@ public class Service extends IntentService {
                 throw new GeneralSecurityException("targetChannel: " + targetChannel + " does not match channel: " + channel);
             }
 
+            notificationHandler.showUpdateAvailableNotification(serviceIsUserInitiated);
             notificationHandler.showDownloadNotification(0, 100);
 
             String downloadFile = preferences.getString(PREFERENCE_DOWNLOAD_FILE, null);
@@ -421,7 +429,7 @@ public class Service extends IntentService {
             onDownloadFinished(streaming, targetBuildDate, targetIncremental);
         } catch (GeneralSecurityException | IOException | ServiceSpecificException e) {
             Log.e(TAG, "failed to download and install update", e);
-            notificationHandler.showFailureNotification(e.getMessage());
+            notificationHandler.showFailureNotification(e.getMessage(), serviceIsUserInitiated);
             mUpdating = false;
             if (serviceIsUserInitiated) {
                 // Either the user will try again immediately or the already scheduled periodic

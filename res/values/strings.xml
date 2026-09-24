@@ -5,6 +5,7 @@
     <string name="notification_channel_reboot">Reboot prompt</string>
     <string name="notification_channel_failure">Error reporting</string>
     <string name="notification_channel_updated">Already up to date</string>
+    <string name="notification_channel_check_result">Manual update check results</string>
     <string name="notification_check_title">Checking for system update</string>
     <string name="notification_download_title">Downloading system update</string>
     <string name="notification_verify_title">Verifying system update</string>
@@ -14,6 +15,8 @@
     <string name="notification_reboot_title">Update successfully installed</string>
     <string name="notification_reboot_text">Please reboot the device to run the latest OS release.</string>
     <string name="notification_reboot_action">Reboot</string>
+    <string name="notification_update_available_title">Update available</string>
+    <string name="notification_update_available_text">The updater is preparing the system update.</string>
     <string name="notification_updated_title">Device is up-to-date</string>
     <string name="notification_updated_text">Latest %s channel release is already installed.</string>
     <string name="notification_failed_check_title">Failed to check for updates</string>

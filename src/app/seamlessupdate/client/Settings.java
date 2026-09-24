@@ -133,6 +133,8 @@ public class Settings extends CollapsingToolbarBaseActivity {
                     intent.putExtra(Service.INTENT_EXTRA_IS_USER_INITIATED, true);
                     intent.putExtra(Service.INTENT_EXTRA_NETWORK, network);
                     context.startForegroundService(intent);
+                } else {
+                    NotificationHandler.showRebootCheckResult(context);
                 }
                 return true;
             });

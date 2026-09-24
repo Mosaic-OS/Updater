@@ -5,6 +5,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Icon;
 import android.text.Html;
@@ -26,10 +27,12 @@ public class NotificationHandler {
     private static final int NOTIFICATION_ID_REBOOT = 2;
     private static final int NOTIFICATION_ID_FAILURE = 3;
     private static final int NOTIFICATION_ID_UPDATED = 4;
+    private static final int NOTIFICATION_ID_CHECK_RESULT = 5;
     private static final String NOTIFICATION_CHANNEL_ID_PROGRESS = "progress";
     private static final String NOTIFICATION_CHANNEL_ID_REBOOT = "updates2";
     private static final String NOTIFICATION_CHANNEL_ID_FAILURE = "failure";
     private static final String NOTIFICATION_CHANNEL_ID_UPDATED = "updated";
+    private static final String NOTIFICATION_CHANNEL_ID_CHECK_RESULT = "check_result";
     private static final int PENDING_REBOOT_ID = 1;
     private static final int PENDING_SETTINGS_ID = 2;
 
@@ -101,7 +104,7 @@ public class NotificationHandler {
                 .setSmallIcon(R.drawable.system_update_fill0_wght400_grad0_opsz48).build());
     }
 
-    void showUpdatedNotification(final String channel) {
+    void showUpdatedNotification(final String channel, final boolean userInitiated) {
         final String channelText;
         if ("stable".equals(channel)) {
             channelText = service.getString(R.string.channel_stable);
@@ -113,6 +116,13 @@ public class NotificationHandler {
             channelText = channel;
         }
 
+        if (userInitiated) {
+            showCheckResult(service, R.string.notification_updated_title,
+                    service.getString(R.string.notification_updated_text, channelText),
+                    R.drawable.security_update_good_fill0_wght400_grad0_opsz48);
+            return;
+        }
+
         notificationManager.notify(NOTIFICATION_ID_UPDATED, new Notification.Builder(service, NOTIFICATION_CHANNEL_ID_UPDATED)
                 .setContentIntent(getPendingSettingsIntent())
                 .setContentTitle(service.getString(R.string.notification_updated_title))
@@ -120,6 +130,42 @@ public class NotificationHandler {
                 .setShowWhen(true)
                 .setSmallIcon(R.drawable.security_update_good_fill0_wght400_grad0_opsz48)
                 .build());
+    }
+
+    void showUpdateAvailableNotification(final boolean userInitiated) {
+        if (userInitiated) {
+            showCheckResult(service, R.string.notification_update_available_title,
+                    service.getString(R.string.notification_update_available_text),
+                    R.drawable.system_update_fill0_wght400_grad0_opsz48);
+        }
+    }
+
+    static void showRebootCheckResult(final Context context) {
+        showCheckResult(context, R.string.notification_reboot_title,
+                context.getString(R.string.notification_reboot_text),
+                R.drawable.system_update_fill0_wght400_grad0_opsz48);
+    }
+
+    private static void showCheckResult(final Context context, final int titleResId,
+            final CharSequence text, final int iconResId) {
+        final NotificationManager manager = context.getSystemService(NotificationManager.class);
+        final NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID_CHECK_RESULT,
+                context.getString(R.string.notification_channel_check_result), IMPORTANCE_HIGH);
+        channel.enableVibration(true);
+        channel.setBlockable(true);
+        manager.createNotificationChannel(channel);
+
+        manager.notify(NOTIFICATION_ID_CHECK_RESULT,
+                new Notification.Builder(context, NOTIFICATION_CHANNEL_ID_CHECK_RESULT)
+                        .setCategory(Notification.CATEGORY_SYSTEM)
+                        .setContentIntent(getPendingSettingsIntent(context))
+                        .setContentTitle(context.getString(titleResId))
+                        .setContentText(text)
+                        .setStyle(new Notification.BigTextStyle().bigText(text))
+                        .setAutoCancel(true)
+                        .setShowWhen(true)
+                        .setSmallIcon(iconResId)
+                        .build());
     }
 
     void showDownloadNotification(long progress, long max) {
@@ -155,6 +201,7 @@ public class NotificationHandler {
     }
 
     void showRebootNotification() {
+        notificationManager.cancel(NOTIFICATION_ID_CHECK_RESULT);
         final PendingIntent reboot = PendingIntent.getBroadcast(service, PENDING_REBOOT_ID,
                         new Intent(service, RebootReceiver.class), PendingIntent.FLAG_IMMUTABLE);
 
@@ -165,6 +212,7 @@ public class NotificationHandler {
 
         notificationManager.notify(NOTIFICATION_ID_REBOOT, new Notification.Builder(service, NOTIFICATION_CHANNEL_ID_REBOOT)
                 .addAction(rebootAction)
+                .setCategory(Notification.CATEGORY_SYSTEM)
                 .setContentIntent(getPendingSettingsIntent())
                 .setContentTitle(service.getString(R.string.notification_reboot_title))
                 .setContentText(service.getString(R.string.notification_reboot_text))
@@ -175,7 +223,7 @@ public class NotificationHandler {
                 .build());
     }
 
-    void showFailureNotification(String exceptionMessage) {
+    void showFailureNotification(String exceptionMessage, final boolean userInitiated) {
         final int titleResId;
         final int contentResId;
 
@@ -200,6 +248,14 @@ public class NotificationHandler {
                 contentResId = R.string.notification_failed_install_text;
         }
 
+        if (userInitiated) {
+            final String text = exceptionMessage == null ? service.getString(contentResId)
+                    : exceptionMessage + "\n\n" + service.getString(contentResId);
+            showCheckResult(service, titleResId, text,
+                    R.drawable.security_update_warning_fill0_wght400_grad0_opsz48);
+            return;
+        }
+
         String text = service.getString(contentResId) + "<br><br><tt>" + exceptionMessage + "</tt>";
         Spanned styledText = Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY);
 
@@ -215,7 +271,11 @@ public class NotificationHandler {
     }
 
     private PendingIntent getPendingSettingsIntent() {
-        return PendingIntent.getActivity(service, PENDING_SETTINGS_ID, new Intent(service,
+        return getPendingSettingsIntent(service);
+    }
+
+    private static PendingIntent getPendingSettingsIntent(final Context context) {
+        return PendingIntent.getActivity(context, PENDING_SETTINGS_ID, new Intent(context,
                 Settings.class), PendingIntent.FLAG_IMMUTABLE);
     }
 }

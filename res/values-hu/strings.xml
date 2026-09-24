@@ -5,6 +5,7 @@
     <string name="notification_channel_reboot">Újraindítási felszólítás</string>
     <string name="notification_channel_failure">Hibabejelentés</string>
     <string name="notification_channel_updated">Már naprakész</string>
+    <string name="notification_channel_check_result">Kézi frissítéskeresés eredményei</string>
     <string name="notification_check_title">Rendszerfrissítés keresése</string>
     <string name="notification_download_title">Rendszerfrissítés letöltése</string>
     <string name="notification_verify_title">Rendszerfrissítés hitelesítése</string>
@@ -14,6 +15,8 @@
     <string name="notification_reboot_title">Frissítés sikeresen telepítve</string>
     <string name="notification_reboot_text">Kérjük indítsa újra a készüléket a legújabb rendszerkiadás futtatásához.</string>
     <string name="notification_reboot_action">Újraindítás</string>
+    <string name="notification_update_available_title">Frissítés érhető el</string>
+    <string name="notification_update_available_text">A rendszerfrissítő előkészíti a rendszerfrissítést.</string>
     <string name="notification_updated_title">A készülék naprakész</string>
     <string name="notification_updated_text">A legújabb %s csatorna kiadása már telepítve van.</string>
     <string name="notification_failed_check_title">Frissítések keresése sikertelen</string>
